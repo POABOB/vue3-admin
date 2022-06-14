@@ -1,15 +1,14 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 in CodeSandbox!" />
+  <router-link to="/login">登入</router-link>
+  <router-link to="/main">後台</router-link>
+  <router-view></router-view>
 </template>
 
 <script>
-import HelloWorldVue from "./components/HelloWorld.vue"
 export default {
   name: "App",
-  components: {
-    HelloWorld: HelloWorldVue
-  }
+  components: {}
 }
 </script>
 
