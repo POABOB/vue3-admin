@@ -1,0 +1,16 @@
+# http://editorconfig.org
+# 統一文件規則
+# 在VSCODE上可以安裝EditorConfig for VS Code
+root = true
+
+[*] # 表示所有文件都適用
+charset = utf-8 # 文件編碼都是utf-8
+indent_style = space # 縮排風格( tab | space )
+indent_size = 2 # 縮排大小( 2 | 4 )
+end_of_line = lf # 換行類型( lf | cr | crlf )
+trim_trailing_whitespace = true # 去除行首任意空白字符
+insert_final_newline = true # 始終在文件尾端插入新行
+
+[*.md] # 表.md後綴的文件適用
+max_line_length = false
+trim_trailing_whitespace = false
