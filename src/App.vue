@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <h2>{{ $store.state.name }}</h2>
   <router-link to="/login">登入</router-link>
   <router-link to="/main">後台</router-link>
   <router-view></router-view>
