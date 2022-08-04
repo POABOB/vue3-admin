@@ -17,5 +17,19 @@ module.exports = {
     config
       .plugin("Components")
       .use(Components({ resolvers: [ElementPlusResolver()] }))
+
+    config.devServer
+      // .port(8080)
+      // .open(true)
+      .proxy({
+        "^/api": {
+          // target: "http://152.136.185.210:5000/",
+          target: "http://localhost:8080/",
+          changeOrigin: true,
+          pathRewrite: {
+            "^/api": ""
+          }
+        }
+      })
   }
 }

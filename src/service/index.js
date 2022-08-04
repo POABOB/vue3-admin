@@ -1,6 +1,6 @@
 import request from "./request"
 import { ElMessageBox, ElMessage } from "element-plus"
-
+import store from "@/store"
 // TODO VUEX GET_TOKEN、RESET_TOKEN
 // 封裝AXIOS實例，可能會有多種不同配置的請求
 // 依照不同status code來顯示Message || ElMessageBox
@@ -10,7 +10,7 @@ const service = new request({
   interceptors: {
     requestInterceptor: (config) => {
       // HEADER挾帶Token
-      const token = "123"
+      const token = store.getters.token
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`
       }
@@ -36,14 +36,15 @@ const service = new request({
           cancelButtonText: "取消",
           type: "warning"
         }).then(() => {
-          // TOCO RESET
-          // store.dispatch("user/resetToken").then(() => {
-          //   location.reload()
-          // })
+          // RESET
+          store.dispatch("user/resetUser").then(() => {
+            location.reload()
+          })
         })
       } else {
+        console.log(error)
         ElMessage({
-          message: error.message,
+          message: error.response.data,
           type: "error"
         })
       }
