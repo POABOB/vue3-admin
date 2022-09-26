@@ -4,6 +4,7 @@ const getters = {
   // USER，登入後儲存的資料
   token: (state) => state.user.token,
   userInfo: (state) => state.user.userInfo,
+  roles: (state) => state.user.roles,
   routes: (state) => state.permission.routes,
   menuToggle: (state) => state.settings.menuOpened,
   settings: (state) => state.settings.settings

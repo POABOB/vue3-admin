@@ -1,4 +1,4 @@
-import router, { asyncRoutes } from "@/router"
+import router from "@/router"
 import settings from "./settings"
 import store from "@/store/index.js"
 
@@ -17,29 +17,42 @@ router.beforeEach(async (to, from, next) => {
   // 設定頁面title
   document.title = getPageTitle(to.meta.title)
 
-  // // 是否需要token
-  // if (!settings.isNeedLogin) setToken(settings.tmpToken)
+  // 是否需要登入，展示模式就不需要這個
+  if (to.path !== "/login" && !settings.isNeedLogin)
+    await store.dispatch("user/setTokenAction", settings.tmpToken)
+
   const hasToken = store.getters.token
   if (hasToken.length) {
     // 登入狀態訪問login，就直接跳轉"/""
     if (to.path === "/login") next({ path: "/" })
     else {
-      const userInfo = store.getters.userInfo
-      if (Object.values(userInfo).length !== 0) {
+      let userInfo = store.getters.userInfo
+      if (Object.values(userInfo).length) {
         next()
       } else {
         try {
           let accessRoutes = []
 
-          if (settings.isNeedLogin) {
-            const { roles } = await store.dispatch("user/getUserInfoAction")
-            accessRoutes = await store.dispatch(
-              "permission/generateRoutesAction",
-              { roles }
-            )
-          } else {
-            accessRoutes = asyncRoutes
+          // 用來切換roles
+          let tmpRoles = settings.tmpUserInfo.roles
+          const storeRoles = store.getters.roles
+          if (storeRoles.length) tmpRoles = storeRoles
+          settings.tmpUserInfo.roles = tmpRoles
+
+          if (settings.isNeedLogin)
+            userInfo = await store.dispatch("user/getUserInfoAction")
+          else {
+            userInfo = await store.dispatch("user/setUserInfoAction", {
+              userInfo: settings.tmpUserInfo,
+              roles: settings.tmpUserInfo.roles
+            })
           }
+
+          const { roles } = userInfo
+          accessRoutes = await store.dispatch(
+            "permission/generateRoutesAction",
+            { roles }
+          )
           accessRoutes.forEach((route) => {
             router.addRoute(route)
           })

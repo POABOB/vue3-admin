@@ -1,6 +1,6 @@
 import { createApp } from "vue"
 import App from "./App.vue"
-
+const app = createApp(App)
 import "normalize.css"
 import "@/assets/css/index.less"
 
@@ -13,6 +13,7 @@ import store from "./store"
 // import ElementPlus from "element-plus"
 // import "element-plus/dist/index.css"
 import { globalRegister } from "./global"
+
 // import "./global"
 
 // API範例
@@ -36,4 +37,6 @@ import { globalRegister } from "./global"
 import "../mock"
 import "@/permission"
 
-createApp(App).use(store).use(globalRegister).use(router).mount("#app")
+app.use(store)
+app.use(globalRegister)
+app.use(router).mount("#app")

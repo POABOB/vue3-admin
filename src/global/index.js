@@ -1,8 +1,8 @@
 // import "element-plus/theme-chalk/base.css"
 // // 因為service的請求會用到，所以全局引入
-// import "element-plus/theme-chalk/el-message.css"
-// import "element-plus/theme-chalk/el-message-box.css"
-// import "element-plus/theme-chalk/el-loading.css"
+import "element-plus/theme-chalk/el-message.css"
+import "element-plus/theme-chalk/el-message-box.css"
+import "element-plus/theme-chalk/el-loading.css"
 
 // 普通組件已經透過 vue.config.js 中配置，無須在此調整
 // config
@@ -24,7 +24,9 @@ import {
   Share,
   Expand,
   Fold,
-  StarFilled
+  StarFilled,
+  UserFilled,
+  EditPen
 } from "@element-plus/icons-vue"
 const components = [
   Monitor,
@@ -37,7 +39,9 @@ const components = [
   Share,
   Expand,
   Fold,
-  StarFilled
+  StarFilled,
+  UserFilled,
+  EditPen
 ]
 
 export function globalRegister(app) {

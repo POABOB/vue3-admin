@@ -27,6 +27,7 @@ export default {
   setup() {
     const store = useStore()
     const handleClick = () => store.dispatch("settings/setMenuAction")
+
     const isOpened = computed(() => store.getters.menuToggle)
     const settings = computed(() => store.getters.settings)
 
@@ -46,6 +47,7 @@ export default {
 
   .navbarContainer {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
   }

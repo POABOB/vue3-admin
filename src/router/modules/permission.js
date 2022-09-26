@@ -7,6 +7,7 @@ const permissionRoutes = {
   children: [
     {
       path: "/permission/all",
+      name: "Permission_All",
       component: () => import("@/views/permission"),
       meta: {
         title: "全部權限",
@@ -14,8 +15,9 @@ const permissionRoutes = {
       }
     },
     {
-      path: "/mpermission/admin",
-      component: () => import("@/views/permission"),
+      path: "/permission/admin",
+      name: "Permission_Admin",
+      component: () => import("@/views/permission/Dynamic.vue"),
       meta: {
         title: "ADMIN權限",
         roles: ["admin"]
@@ -23,7 +25,8 @@ const permissionRoutes = {
     },
     {
       path: "/permission/editor",
-      component: () => import("@/views/permission"),
+      name: "Permission_Editor",
+      component: () => import("@/views/permission/Dynamic.vue"),
       meta: {
         title: "EDITOR權限",
         roles: ["editor"]

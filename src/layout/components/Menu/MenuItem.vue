@@ -4,11 +4,13 @@
     <template
       v-if="
         showMenuItem(item.children, item) &&
-        (!child.children || child?.hasNoChildren)
+        (!child.children || child?.hasNoChildren) &&
+        (!item.meta || !item.meta.alwaysShow)
       "
     >
       <Link v-if="child.meta" :to="resolvePath(child.path)">
         <el-menu-item
+          popper-append-to-body
           :index="resolvePath(child.path)"
           :class="{ 'submenu-title-noDropdown': !isNest }"
         >
@@ -22,7 +24,12 @@
     </template>
 
     <!-- 子MENU -->
-    <el-sub-menu v-else ref="MenuItem" :index="resolvePath(item.path)">
+    <el-sub-menu
+      v-else
+      ref="MenuItem"
+      :index="resolvePath(item.path)"
+      popper-append-to-body
+    >
       <template #title>
         <el-icon>
           <component :size="20" :is="`${item.meta.icon}`"></component>
@@ -94,7 +101,7 @@ export default {
 <style lang="less" scoped>
 .submenu {
   .el-menu-item.is-active {
-    background-color: #0a60bd !important;
+    color: #0a60bd !important;
   }
   .el-menu-item .el-icon,
   .el-sub-menu .el-icon {

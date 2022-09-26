@@ -1,5 +1,8 @@
 import router, { asyncRoutes } from "@/router"
 import localCache from "@/utils/cache"
+import settings from "@/settings"
+import { ElLoading } from "element-plus"
+
 import {
   requestLogin,
   // requestUserInfoById,
@@ -24,7 +27,8 @@ const resetRouter = () => {
 const state = () => {
   return {
     token: localCache.get("token") ?? "",
-    userInfo: {}
+    userInfo: {},
+    roles: localCache.getLocal("roles") ?? []
   }
 }
 const mutations = {
@@ -34,6 +38,9 @@ const mutations = {
   SET_USER_INFO: (state, userInfo) => {
     state.userInfo = userInfo
   },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  },
   RESET_ALL: (state) => {
     Object.assign(state, defaultUser())
   }
@@ -41,17 +48,27 @@ const mutations = {
 
 const actions = {
   async loginAction({ commit }, payload) {
+    const loading = ElLoading.service({
+      lock: true,
+      text: "Loading...",
+      fullscreen: true,
+      background: "rgba(0, 0, 0, 0.1)"
+    })
     // 1. 登入
-    const loginResult = await requestLogin(payload)
-    localCache.set("token", loginResult.token)
-    await commit("SET_TOKEN", loginResult.token)
+    if (settings.isNeedLogin) {
+      const loginResult = await requestLogin(payload)
+      localCache.set("token", loginResult.token)
+      await commit("SET_TOKEN", loginResult.token)
+    } else loading
 
-    // 2. 獲取userInfo
-    const userInfoResult = await requestUserInfoByToken(loginResult.token)
-    await commit("SET_USER_INFO", userInfoResult)
-
-    // 3. 跳轉
+    // 2. 跳轉
     router.push({ path: state.redirect || "/" })
+
+    if (!settings.isNeedLogin) {
+      router.afterEach(() => {
+        setTimeout(() => loading?.close(), 1000)
+      })
+    }
   },
 
   // getUserInfo
@@ -60,6 +77,7 @@ const actions = {
       requestUserInfoByToken(state.token)
         .then((userInfoResult) => {
           commit("SET_USER_INFO", userInfoResult)
+          commit("SET_ROLES", userInfoResult.roles)
           resolve(userInfoResult)
         })
         .catch((error) => {
@@ -68,10 +86,30 @@ const actions = {
     })
   },
 
+  // setUserInfo
+  setUserInfoAction({ commit }, { userInfo, roles }) {
+    return new Promise((resolve) => {
+      commit("SET_USER_INFO", userInfo)
+      // 紀錄 roles
+      localCache.setLocal("roles", roles)
+      commit("SET_ROLES", roles)
+      resolve(userInfo)
+    })
+  },
+
+  // noNeedLogin
+  setTokenAction({ commit }, token) {
+    localCache.set("token", token)
+    commit("SET_TOKEN", token)
+  },
+
   // logout
   resetUser({ commit }) {
     return new Promise((resolve) => {
       localCache.remove("token")
+      localCache.removeLocal("roles")
+      localCache.removeLocal("routes")
+      localCache.removeLocal("addRoutes")
       resetRouter()
       commit("RESET_ALL")
       resolve()

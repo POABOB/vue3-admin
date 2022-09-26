@@ -1,7 +1,7 @@
-import { createRouter, createWebHashHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router"
 import Layout from "@/layout/Layout.vue"
 
-import formRoutes from "./modules/form"
+import menuRoutes from "./modules/menu"
 import permissionRoutes from "./modules/permission"
 import storyRoutes from "./modules/story"
 
@@ -32,6 +32,7 @@ export const constRoutes = [
     children: [
       {
         path: "",
+        name: "Dashboard",
         meta: { title: "系統總覽", icon: "Monitor" },
         component: () => import("@/views/dashboard")
       }
@@ -44,32 +45,49 @@ export const constRoutes = [
     children: [
       {
         path: "",
+        name: "CRUD",
         component: () => import("@/views/CRUD"),
         meta: { title: "CRUD", icon: "List" }
       }
     ]
   },
 
-  formRoutes,
+  {
+    path: "/ck-editor",
+    component: Layout,
+    children: [
+      {
+        path: "",
+        name: "CKEditor",
+        component: () => import("@/views/CkEditor"),
+        meta: { title: "CKEditor 5", icon: "EditPen" }
+      }
+    ]
+  },
+
+  menuRoutes,
 
   {
     path: "/external-link",
     children: [
       {
         path: "https://poabob.github.io",
-        meta: { title: "外部連結", icon: "Share" }
+        meta: { title: "部落格", icon: "Share" }
       }
     ]
   },
 
+  storyRoutes
+]
+
+export const asyncRoutes = [
+  permissionRoutes,
   { path: "/:pathMatch(.*)*", redirect: "/404", hidden: true }
 ]
 
-export const asyncRoutes = [storyRoutes, permissionRoutes]
-
 const router = createRouter({
   routes: constRoutes,
-  history: createWebHashHistory()
+  history: createWebHistory()
 })
 
 export default router

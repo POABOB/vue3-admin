@@ -35,6 +35,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
 
   .img {
     height: 100%;

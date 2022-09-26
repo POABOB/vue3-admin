@@ -25,6 +25,7 @@ import { reactive, ref } from "vue"
 // 表單驗證規則
 import { rules } from "../config/accountConfig"
 import { useStore } from "vuex"
+
 export default {
   setup() {
     const store = useStore()

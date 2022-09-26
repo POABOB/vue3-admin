@@ -1,6 +1,6 @@
 <template>
-  <div class="main" :class="[classObj1, classObj2]">
-    <el-container class="mainContent">
+  <div class="main">
+    <el-container class="mainContent" :class="classObj">
       <Menu class="menuContainer" />
       <el-container class="page" direction="vertical">
         <Navbar v-show="showTopNavbar" />
@@ -23,16 +23,18 @@ export default {
   setup() {
     const store = useStore()
     const showTopNavbar = computed(() => store.getters.settings.showTopNavbar)
-    const classObj1 = computed(() => {
-      return { closeMenu: store.getters.menuToggle }
-    })
-    const classObj2 = computed(() => {
+
+    // const isCollapse = computed(() =>)
+    // const isHidden = computed(() => )
+    const classObj = computed(() => {
       return {
+        closeMenu: store.getters.menuToggle,
         hideMenu:
           !store.getters.settings.showLeftMenu || window.innerWidth < 568
       }
     })
-    return { showTopNavbar, classObj1, classObj2 }
+
+    return { showTopNavbar, classObj }
   }
 }
 </script>
@@ -44,6 +46,10 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+
+  .menuContainer {
+    transition: width 0.1s;
+  }
 }
 .mainContent,
 .page {

@@ -1,5 +1,5 @@
 <template>
-  <div>form</div>
+  <div>CK</div>
 </template>
 
 <script>

@@ -19,6 +19,7 @@
             :key="item.path"
             :item="item"
             :basePath="item.path"
+            :isCollapse="isCollapse"
           />
         </el-menu>
       </el-scrollbar>
@@ -82,7 +83,7 @@ export default {
   text-align: left;
   cursor: pointer;
   background-color: #001529;
-  transition: width 0.1s linear;
+  // transition: width 0.15s;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */
   &::-webkit-scrollbar {

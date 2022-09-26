@@ -23,8 +23,8 @@ module.exports = {
       // .open(true)
       .proxy({
         "^/api": {
-          // target: "http://152.136.185.210:5000/",
-          target: "http://localhost:8080/",
+          target: "http://152.136.185.210:5000/",
+          // target: "http://localhost:8080/",
           changeOrigin: true,
           pathRewrite: {
             "^/api": ""

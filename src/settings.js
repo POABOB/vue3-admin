@@ -47,7 +47,7 @@ const settings = {
    * @type {boolean} true | false
    * @description Whether need login
    */
-  isNeedLogin: true,
+  isNeedLogin: false,
   /**
    * @type {string} 'roles' | 'code'
    */
@@ -70,7 +70,17 @@ const settings = {
   /*
    * setting dev token when  isNeedLogin is setting false
    * */
-  tmpToken: "tmp_token"
+  tmpToken: "tmp_token",
+  /*
+   * setting dev user info when  isNeedLogin is setting false
+   * */
+  tmpUserInfo: {
+    avatar:
+      "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80",
+    id: 60,
+    name: "User",
+    roles: ["admin"]
+  }
 }
 
 export default settings
