@@ -37,6 +37,4 @@ import { globalRegister } from "./global"
 import "../mock"
 import "@/permission"
 
-app.use(store)
-app.use(globalRegister)
-app.use(router).mount("#app")
+app.use(store).use(globalRegister).use(router).mount("#app")
