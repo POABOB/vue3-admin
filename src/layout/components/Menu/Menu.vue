@@ -49,6 +49,7 @@ export default {
     })
 
     const isCollapse = computed(() => store.getters.menuToggle)
+
     const settings = computed(() => store.getters.settings)
     // 如果手機螢幕大小的話，Menu關閉就不要顯示ICON
     const asideWidth = computed(() =>

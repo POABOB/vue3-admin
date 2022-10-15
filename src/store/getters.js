@@ -7,6 +7,7 @@ const getters = {
   roles: (state) => state.user.roles,
   routes: (state) => state.permission.routes,
   menuToggle: (state) => state.settings.menuOpened,
+  device: (state) => state.settings.device,
   settings: (state) => state.settings.settings
 }
 export default getters

@@ -8,13 +8,20 @@
 
 - Echart
 - i18n
-- Menu bug in mobile screen
 
 ## Project setup
 
 ```
 npm install
+npm run prepare
 ```
+
+## Project commit
+
+```
+npm run cz
+```
+
 
 ### Compiles and hot-reloads for development
 
