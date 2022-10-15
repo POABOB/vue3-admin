@@ -19,7 +19,12 @@ npm run prepare
 ## Project commit
 
 ```
+# git add <files>
+git add .
+# commit with format
 npm run cz
+# git push origin <branch>
+git push origin main
 ```
 
 

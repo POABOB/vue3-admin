@@ -117,7 +117,7 @@ export default {
 }
 
 .hideMenu {
-  .page[data-v-82a49174] {
+  .page {
     margin-left: 0;
     position: relative;
     overflow: hidden;
